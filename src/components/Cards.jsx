@@ -9,7 +9,7 @@ const Cards = ({ objetoNoticia }) => {
           <Card.Title>{objetoNoticia.title}</Card.Title>
         </Card.Body>
         <Card.Footer className="text-end">
-          <Button variant="danger">Ver noticia completa</Button>
+          <Button variant="danger" href={objetoNoticia.link} target="_blank">Ver noticia completa</Button>
         </Card.Footer>
       </Card>
     </Col>

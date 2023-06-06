@@ -13,10 +13,11 @@ const AdministradorNoticias = () => {
 
   const consultarAPI = async () => {
     try {
-        const respuesta = await fetch("https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&q=ukraine");
+        const respuesta = await fetch("https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=ar");
         const informacion = await respuesta.json();
         console.log(respuesta);
         setNoticias(informacion.results);
+        console.log(informacion)
         console.log(noticias);
         const nFiltradas = noticias.filter((e)=>e.category[0] === categoriaSeleccionada)
         setNoticiasFiltradas(nFiltradas);
@@ -36,7 +37,7 @@ const AdministradorNoticias = () => {
               controlId="formPlaintextEmail"
             >
               <Form.Label column sm="2" md="4">
-                Search by category:
+                Buscar en una categoría:
               </Form.Label>
               <Col sm="10" md="6" className="px-2 px-md-4">
                 <Form.Select
@@ -45,10 +46,10 @@ const AdministradorNoticias = () => {
                     setCategoriaSeleccionada(e.target.value);
                   }}
                 >
-                  <option value="all">select by category</option>
-                  <option value="top">Mundial</option>
-                  <option value="business">Business</option>
-                  <option value="politics">Politics</option>
+                  <option value="top">Selecciona una categoría</option>
+                  <option value="science">Ciencia</option>
+                  <option value="sports">Deportes</option>
+                  <option value="business">Negocios</option>
                 </Form.Select>
               </Col>
             </Form.Group>
