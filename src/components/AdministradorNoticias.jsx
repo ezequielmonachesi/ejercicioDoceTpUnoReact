@@ -4,25 +4,30 @@ import { useState, useEffect } from "react";
 
 const AdministradorNoticias = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
+  const [paisSeleccionado, setPaisSeleccionado] = useState("");
   const [noticias, setNoticias] = useState([]);
   const [noticiasFiltradas, setNoticiasFiltradas] = useState([]);
 
   useEffect(() => {
     consultarAPI();
-  }, [categoriaSeleccionada]);
+  }, [categoriaSeleccionada, paisSeleccionado]);
 
   const consultarAPI = async () => {
     try {
-        const respuesta = await fetch("https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=ar");
-        const informacion = await respuesta.json();
-        console.log(respuesta);
-        setNoticias(informacion.results);
-        console.log(informacion.results)
-        console.log(noticias);
-        // console.log(noticias[0].category[0])
-        const nFiltradas = noticias.filter(e=>e.category[0] === categoriaSeleccionada)
-        setNoticiasFiltradas(nFiltradas);
-        console.log(nFiltradas)
+      const respuesta = await fetch(
+        paisSeleccionado
+      );
+      const informacion = await respuesta.json();
+      console.log(respuesta);
+      setNoticias(informacion.results);
+      console.log(informacion.results);
+      console.log(noticias);
+      // console.log(noticias[0].category[0])
+      const nFiltradas = noticias.filter(
+        (e) => e.category[0] === categoriaSeleccionada
+      );
+      setNoticiasFiltradas(nFiltradas);
+      console.log(nFiltradas);
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +43,22 @@ const AdministradorNoticias = () => {
               className="mb-3 justify-content-center"
               controlId="formPlaintextEmail"
             >
+              <Form.Label column sm="2" md="4">
+                Buscar en un país:
+              </Form.Label>
+              <Col sm="10" md="6" className="px-2 px-md-4">
+                <Form.Select
+                  aria-label="categorías"
+                  onChange={(e) => {
+                    setPaisSeleccionado(e.target.value);
+                  }}
+                >
+                  <option value="top">Selecciona una categoría</option>
+                  <option value="https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=ar">Argentina</option>
+                  <option value="https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=cl">Chile</option>
+                  <option value="https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=uy">Uruguay</option>
+                </Form.Select>
+              </Col>
               <Form.Label column sm="2" md="4">
                 Buscar en una categoría:
               </Form.Label>
