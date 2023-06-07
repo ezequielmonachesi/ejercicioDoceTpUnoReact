@@ -17,10 +17,12 @@ const AdministradorNoticias = () => {
         const informacion = await respuesta.json();
         console.log(respuesta);
         setNoticias(informacion.results);
-        console.log(informacion)
+        console.log(informacion.results)
         console.log(noticias);
-        const nFiltradas = noticias.filter((e)=>e.category[0] === categoriaSeleccionada)
+        // console.log(noticias[0].category[0])
+        const nFiltradas = noticias.filter(e=>e.category[0] === categoriaSeleccionada)
         setNoticiasFiltradas(nFiltradas);
+        console.log(nFiltradas)
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +51,7 @@ const AdministradorNoticias = () => {
                   <option value="top">Selecciona una categoría</option>
                   <option value="science">Ciencia</option>
                   <option value="sports">Deportes</option>
-                  <option value="business">Negocios</option>
+                  <option value="top">General</option>
                 </Form.Select>
               </Col>
             </Form.Group>
