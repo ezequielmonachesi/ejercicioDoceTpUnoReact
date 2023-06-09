@@ -6,28 +6,21 @@ const AdministradorNoticias = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
   const [paisSeleccionado, setPaisSeleccionado] = useState("");
   const [noticias, setNoticias] = useState([]);
-  const [noticiasFiltradas, setNoticiasFiltradas] = useState([]);
 
   useEffect(() => {
-    consultarAPI();
+    if(categoriaSeleccionada && paisSeleccionado){
+      consultarAPI(categoriaSeleccionada, paisSeleccionado);
+    }
   }, [categoriaSeleccionada, paisSeleccionado]);
 
-  const consultarAPI = async () => {
+  const consultarAPI = async (categoria, pais) => {
     try {
-      const respuesta = await fetch(
-        paisSeleccionado
-      );
+      const respuesta = await fetch(`https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&category=${categoria}&country=${pais}`);
       const informacion = await respuesta.json();
       console.log(respuesta);
       setNoticias(informacion.results);
       console.log(informacion.results);
       console.log(noticias);
-      // console.log(noticias[0].category[0])
-      const nFiltradas = noticias.filter(
-        (e) => e.category[0] === categoriaSeleccionada
-      );
-      setNoticiasFiltradas(nFiltradas);
-      console.log(nFiltradas);
     } catch (error) {
       console.log(error);
     }
@@ -53,10 +46,10 @@ const AdministradorNoticias = () => {
                     setPaisSeleccionado(e.target.value);
                   }}
                 >
-                  <option value="top">Selecciona una categoría</option>
-                  <option value="https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=ar">Argentina</option>
-                  <option value="https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=cl">Chile</option>
-                  <option value="https://newsdata.io/api/1/news?apikey=pub_240135ddcbf2e44d1a628028e9bb6a82d03a4&country=uy">Uruguay</option>
+                  <option value="top">Selecciona una país</option>
+                  <option value="ar">Argentina</option>
+                  <option value="cl">Chile</option>
+                  <option value="uy">Uruguay</option>
                 </Form.Select>
               </Col>
               <Form.Label column sm="2" md="4">
@@ -79,7 +72,7 @@ const AdministradorNoticias = () => {
           </Form>
         </Card.Header>
         <Card.Body>
-          <RowCards noticiasFiltradas={noticiasFiltradas}></RowCards>
+          <RowCards noticiasFiltradas={noticias}></RowCards>
         </Card.Body>
       </Card>
     </>
